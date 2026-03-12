@@ -26,6 +26,16 @@ const result = await executeTopologyFrame({
 });
 ```
 
+## Compatibility Entrypoints
+
+The package exposes migration-safe module entrypoints:
+
+- `@affectively/aeon-3d/three`
+- `@affectively/aeon-3d/fiber`
+- `@affectively/aeon-3d/drei`
+
+These allow a global import migration now while the runtime is progressively rewritten away from Three.js internals.
+
 ## Status
 
 Bootstrap compat surface for Gnosis and Aeon web runtimes.
