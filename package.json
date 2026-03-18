@@ -1,5 +1,5 @@
 {
-  "name": "@affectively/aeon-3d",
+  "name": "@a0n/aeon-3d",
   "version": "0.1.0",
   "description": "Topology-first 3D compatibility layer with fork/race/fold/vent execution",
   "type": "module",

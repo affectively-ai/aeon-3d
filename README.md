@@ -21,7 +21,7 @@ That maps cleanly onto the package vocabulary:
 ## Quick Example
 
 ```ts
-import { executeTopologyFrame } from '@affectively/aeon-3d';
+import { executeTopologyFrame } from '@a0n/aeon-3d';
 
 const result = await executeTopologyFrame({
   branches: [
@@ -44,10 +44,10 @@ The result tells you:
 
 The package exposes migration-friendly entrypoints:
 
-- `@affectively/aeon-3d`
-- `@affectively/aeon-3d/three`
-- `@affectively/aeon-3d/fiber`
-- `@affectively/aeon-3d/drei`
+- `@a0n/aeon-3d`
+- `@a0n/aeon-3d/three`
+- `@a0n/aeon-3d/fiber`
+- `@a0n/aeon-3d/drei`
 
 That is useful even at this early stage. It gives you a stable place to start integration work before deeper runtime changes arrive.
 
