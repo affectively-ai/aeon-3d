@@ -1,0 +1,56 @@
+name: Gnosis Polyglot Scan
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+concurrency:
+  group: polyglot-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      security-events: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache gnosis-polyglot binary
+        id: cache-binary
+        uses: actions/cache@v4
+        with:
+          path: ~/.gnosis-polyglot/bin
+          key: gnosis-polyglot-${{ runner.os }}-v0.2.0
+
+      - name: Install gnosis-polyglot
+        if: steps.cache-binary.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ~/.gnosis-polyglot/bin
+          git clone --depth 1 https://github.com/affectively-ai/gnosis.git /tmp/gnosis
+          cd /tmp/gnosis/polyglot
+          cargo build --release
+          cp target/release/gnosis-polyglot ~/.gnosis-polyglot/bin/
+
+      - name: Run polyglot scan
+        id: scan
+        run: |
+          BINARY=~/.gnosis-polyglot/bin/gnosis-polyglot
+          SARIF="${{ runner.temp }}/results.sarif"
+          $BINARY . --format sarif > "$SARIF" 2>/dev/null || true
+          echo "sarif=$SARIF" >> "$GITHUB_OUTPUT"
+
+      - name: Upload SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ${{ steps.scan.outputs.sarif }}
+          category: gnosis-polyglot
+        continue-on-error: true
