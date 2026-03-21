@@ -9,10 +9,25 @@
     ".": "./src/index.ts",
     "./three": "./src/three.ts",
     "./fiber": "./src/fiber.ts",
-    "./drei": "./src/drei.ts"
+    "./drei": "./src/drei.ts",
+    "./voidmap": "./src/voidmap.ts",
+    "./voidmap-fiber": "./src/voidmap-fiber.tsx",
+    "./voidmap-temporal": "./src/voidmap-temporal.ts",
+    "./voidmap-temporal-fiber": "./src/voidmap-temporal-fiber.tsx",
+    "./voidmap-precognition": "./src/voidmap-precognition.ts",
+    "./voidmap-precognition-fiber": "./src/voidmap-precognition-fiber.tsx",
+    "./voidmap-netflix": "./src/voidmap-netflix.ts",
+    "./voidmap-live": "./src/voidmap-live.ts",
+    "./voidmap-archaeology": "./src/voidmap-archaeology.ts",
+    "./voidmap-oracle": "./src/voidmap-oracle.ts",
+    "./voidmap-federation": "./src/voidmap-federation.ts",
+    "./voidmap-provenance": "./src/voidmap-provenance.ts",
+    "./voidmap-social": "./src/voidmap-social.ts"
   },
   "scripts": {
-    "check": "echo \"No standalone checks configured yet\""
+    "check": "echo \"No standalone checks configured yet\"",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "peerDependencies": {
     "@react-three/drei": "^10.7.7",
