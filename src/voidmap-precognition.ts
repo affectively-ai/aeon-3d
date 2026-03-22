@@ -302,6 +302,50 @@ export function detectAtRisk(
 }
 
 // ---------------------------------------------------------------------------
+// Echo boundary bridge: convert EchoBoundary to GhostPoints
+// ---------------------------------------------------------------------------
+
+/**
+ * Shape of an EchoBoundary from aeon-echo.
+ * Inlined to avoid a hard dependency on @a0n/aeon-echo.
+ */
+export interface EchoBoundaryLike {
+  readonly rejections: ReadonlyMap<string, number>;
+  readonly totalMass: number;
+  readonly dimensions: number;
+}
+
+/**
+ * Convert an EchoBoundary into GhostPoints compatible with projectGhosts.
+ * Each rejection dimension becomes a point -- coordinates derived from
+ * a simple hash of the dimension name to distribute across 3D space.
+ */
+export function echoBoundaryToVoidPoints(boundary: EchoBoundaryLike): GhostPoint[] {
+  const points: GhostPoint[] = [];
+  const total = boundary.totalMass || 1;
+
+  for (const [dim, count] of boundary.rejections) {
+    // Simple string hash -> 3D position
+    let h = 0;
+    for (let i = 0; i < dim.length; i++) {
+      h = ((h << 5) - h + dim.charCodeAt(i)) | 0;
+    }
+    const x = ((h & 0xff) / 128) - 1;
+    const y = (((h >> 8) & 0xff) / 128) - 1;
+    const z = (((h >> 16) & 0xff) / 128) - 1;
+
+    points.push({
+      branchId: dim,
+      position: { x, y, z },
+      deathProbability: count / total,
+      priorRejections: count,
+    });
+  }
+
+  return points.sort((a, b) => b.deathProbability - a.deathProbability);
+}
+
+// ---------------------------------------------------------------------------
 // Phase transition detection: when the void's character changes
 // ---------------------------------------------------------------------------
 
