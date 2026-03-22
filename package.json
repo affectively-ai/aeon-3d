@@ -23,7 +23,8 @@
     "./voidmap-federation": "./src/voidmap-federation.ts",
     "./voidmap-provenance": "./src/voidmap-provenance.ts",
     "./voidmap-social": "./src/voidmap-social.ts",
-    "./voidmap-negotiation": "./src/voidmap-negotiation.ts"
+    "./voidmap-negotiation": "./src/voidmap-negotiation.ts",
+    "./voidmap-topology": "./src/voidmap-topology.ts"
   },
   "scripts": {
     "check": "echo \"No standalone checks configured yet\"",
